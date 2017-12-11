@@ -6,5 +6,6 @@ Tools:
 * node.js
 * aws-cli
 * jq
+* docker-squash
 
 This image is designed to be used by CircleCI as a build image.
