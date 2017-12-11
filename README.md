@@ -1,4 +1,4 @@
-# docker CircleCI s2i Build image
+# Docker CircleCI s2i Build image
 
 Based on the CircleCI Node image this adds tools to build and images.
 
