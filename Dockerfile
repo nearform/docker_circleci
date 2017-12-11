@@ -8,5 +8,5 @@ RUN \
     sudo apt-get update -qq && \
     sudo apt-get install -qqy python-dev python-pip jq && \
     sudo rm -rf /var/lib/apt/lists/* && \
-    sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws \
-    pip install docker-squash
+    sudo pip install docker-squash && \
+    sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
