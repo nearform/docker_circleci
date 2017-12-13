@@ -15,6 +15,6 @@ RUN \
     sudo rm -rf /var/lib/apt/lists/* && \
     sudo easy_install pip && \
     sudo pip install docker-squash && \
-    sudo pip install --user python-dateutil && \
-    sudo pip install --user --no-deps s3cmd && \
+    sudo pip install python-dateutil && \
+    sudo pip install --no-deps s3cmd && \
     sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
