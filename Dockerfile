@@ -15,6 +15,7 @@ RUN \
     unzip awscli-bundle.zip && \
     sudo apt-get update -qq && \
     sudo apt-get install -qqy \
+	make-guile \
         python-dev \
         python-setuptools \
         build-essential \
