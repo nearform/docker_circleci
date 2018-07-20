@@ -1,4 +1,4 @@
-FROM circleci/node:8.11-stretch
+FROM circleci/golang:1.9-stretch
 LABEL maintainer alex.knol@nearform.com
 
 ENV S2I_VERSION v1.1.9a
@@ -11,15 +11,12 @@ RUN \
     wget "$URL" && \
     tar zxvf "source-to-image-$S2I_VERSION_COMPLETE-linux-amd64.tar.gz" && \
     sudo mv ./s2i /usr/local/bin && \
-    curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
-    unzip awscli-bundle.zip && \
     sudo apt-get update -qq && \
     sudo apt-get install -qqy \
         python-dev \
         python-setuptools \
         build-essential \
         jq \
-        golang \
         git-core \
         libdevmapper-dev \
         libgpgme11-dev \
@@ -28,13 +25,20 @@ RUN \
         libglib2.0-dev \
         libostree-dev && \
     sudo rm -rf /var/lib/apt/lists/* && \
+    go env GOPATH && \
+    go get -u github.com/magefile/mage && \
+    cd $GOPATH/src/github.com/magefile/mage && \
+    go run -v bootstrap.go && \
+    go get -u github.com/spf13/viper && \
+    go get -u github.com/docker/docker/client && \
+    go get -u github.com/mholt/archiver && \
     sudo easy_install pip && \
     sudo pip install https://github.com/goldmann/docker-squash/archive/master.zip && \
     sudo pip install python-dateutil && \
     sudo pip install --no-deps s3cmd && \
+    curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
+    unzip awscli-bundle.zip && \
     sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws && \
-    mkdir -p ${HOME}/go/ && \
-    export GOPATH=${HOME}/go/ && \
     git clone https://github.com/projectatomic/skopeo $GOPATH/src/github.com/projectatomic/skopeo && \
     cd $GOPATH/src/github.com/projectatomic/skopeo && make binary-local && \
     sudo mv skopeo /usr/bin/
